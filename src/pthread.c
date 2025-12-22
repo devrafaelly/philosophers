@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   pthread.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/16 02:44:50 by devrafaelly       #+#    #+#             */
-/*   Updated: 2025/12/21 21:06:48 by devrafaelly      ###   ########.fr       */
+/*   Created: 2025/12/21 20:02:45 by devrafaelly       #+#    #+#             */
+/*   Updated: 2025/12/21 20:43:45 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-#include <stdio.h>
+#include <sys/time.h> //gettimeofday := int gettimeofday(struct timeval *restrict tv, struct timezone *_Nullable restrict tz);
 
-int	main(int ac, char **av)
-{
-	t_rules	*rules;
-	int	*numbers;
-	
-	if (ac < 5 || ac > 6)
-		return (printf("Error: wrong number of arguments\n"), 1);
-	numbers = parse_args(ac, av);
-	if (!numbers)
-		return (printf("Error: malloc failed\n"), 1);
-	rules = init_program(ac, numbers);
-	if (!rules)
-		return (free(numbers), printf("Error: malloc failed\n"), 1);
-	free(numbers);
-	free(rules);
-	return (0);
-}
+// if (!gettimeofday(&tv, NULL))
+// 	return (1);

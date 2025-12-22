@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/16 02:44:50 by devrafaelly       #+#    #+#             */
-/*   Updated: 2025/12/21 21:06:48 by devrafaelly      ###   ########.fr       */
+/*   Created: 2025/12/21 20:14:38 by devrafaelly       #+#    #+#             */
+/*   Updated: 2025/12/21 20:45:21 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-#include <stdio.h>
+#include <stdlib.h>
 
-int	main(int ac, char **av)
+t_rules	*init_program(int ac, int *n)
 {
 	t_rules	*rules;
-	int	*numbers;
 	
-	if (ac < 5 || ac > 6)
-		return (printf("Error: wrong number of arguments\n"), 1);
-	numbers = parse_args(ac, av);
-	if (!numbers)
-		return (printf("Error: malloc failed\n"), 1);
-	rules = init_program(ac, numbers);
+	rules = malloc(sizeof(t_rules));
 	if (!rules)
-		return (free(numbers), printf("Error: malloc failed\n"), 1);
-	free(numbers);
-	free(rules);
-	return (0);
+		return (NULL);
+	rules->number_of_philosophers = n[0];
+	rules->time_to_die = n[1];
+	rules->time_to_eat = n[2];
+	rules->time_to_sleep = n[3];
+	rules->number_of_times_each_philosopher_must_eat = 0;
+	if (ac == 6)
+		rules->number_of_times_each_philosopher_must_eat = n[4];
+	return (rules);
 }
