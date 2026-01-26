@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 20:14:38 by devrafaelly       #+#    #+#             */
-/*   Updated: 2025/12/21 20:45:21 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/01/26 00:06:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@
 
 t_rules	*init_program(int ac, int *n)
 {
-	t_rules	*rules;
+	t_rules rules;
 	
-	rules = malloc(sizeof(t_rules));
-	if (!rules)
-		return (NULL);
 	rules->number_of_philosophers = n[0];
 	rules->time_to_die = n[1];
 	rules->time_to_eat = n[2];

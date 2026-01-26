@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 02:44:50 by devrafaelly       #+#    #+#             */
-/*   Updated: 2025/12/21 21:06:48 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/01/26 00:22:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 #include <stdio.h>
 
 int	main(int ac, char **av)
 {
-	t_rules	*rules;
+	t_rules	rules;
 	int	*numbers;
 	
 	if (ac < 5 || ac > 6)
