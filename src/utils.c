@@ -3,28 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 04:15:48 by codespace         #+#    #+#             */
-/*   Updated: 2026/01/26 04:16:02 by codespace        ###   ########.fr       */
+/*   Updated: 2026/02/02 21:09:51 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	ft_atoi(const char *nptr)
+#include "philo.h"
+
+#include <stdio.h>
+
+long	ft_atol(const char *nptr)
 {
-	int	signal;
-	int	res;
+	int		signal;
+	long	res;
 
 	signal = 1;
 	res = 0;
 	while (*nptr == 32 || (*nptr >= 9 && *nptr <= 13))
-	{
 		nptr++;
-	}
 	if (*nptr == '-' || *nptr == '+')
 	{
 		if (*nptr == '-')
-			signal *= -1;
+			signal = -1;
 		nptr++;
 	}
 	while (*nptr >= '0' && *nptr <= '9')
@@ -35,9 +37,21 @@ static int	ft_atoi(const char *nptr)
 	return (res * signal);
 }
 
-static int	ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
+}
+
+void	print_log(t_philo *philo, char *s)
+{
+	long long	time;
+
+	time = timestamp(philo);
+	if (!time)
+		return ;
+	pthread_mutex_lock(&(philo->rules->log));
+	printf("%lld %d %s\n", time, philo->philo_id, s);
+	pthread_mutex_unlock(&(philo->rules->log));
 }
