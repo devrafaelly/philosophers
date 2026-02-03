@@ -1,5 +1,5 @@
 NAME		:= philo
-CC		:= cc
+CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror -g
 
 # Directories
@@ -11,12 +11,18 @@ INCLUDES	:= $(foreach dir,$(INCLUDE_DIRS),-I$(dir))
 # Colors
 GREEN 		:= \033[0;32m
 YELLOW		:= \033[0;33m
-RED		:= \033[0;31m
+RED			:= \033[0;31m
 BLUE		:= \033[0;34m
 RESET		:= \033[0m
 
 # Files
-SRC		:= philo.c
+SRC		:= 	src/philo.c \
+			src/parse.c \
+			src/init.c \
+			src/routine.c \
+			src/actions.c \
+			src/time_control.c \
+			src/utils.c
 OBJ		:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
 $(NAME): $(OBJ)
