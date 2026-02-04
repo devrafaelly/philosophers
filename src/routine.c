@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 23:59:46 by codespace         #+#    #+#             */
-/*   Updated: 2026/02/03 21:43:05 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/04 16:04:10 by rafaoliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void		philo_take_forks(t_philo *philo);
 void		philo_eat(t_philo *philo);
 void		philo_drop_forks(t_philo *philo);
 void		philo_sleep(t_philo *philo);
+void		ft_usleep(t_data *data, int ms);
 void		print_log(t_philo *philo, char *s);
 int			get_stop(t_data *data);
 static void	set_stop(t_data *data);
@@ -31,19 +32,18 @@ void	*philo_routine(void *arg)
 	if (philo->data->n_philo == 1)
 	{
 		print_log(philo, "has taken a fork");
-		usleep(philo->data->t_die * 1000);
-		print_log(philo, "died");
+		ft_usleep(philo->data, philo->data->t_die);
 		return (NULL);
 	}
 	if (philo->philo_id % 2 != 0)
 		usleep(1000);
 	while (!get_stop(philo->data))
 	{
-		print_log(philo, "is thinking");
 		philo_take_forks(philo);
 		philo_eat(philo);
 		philo_drop_forks(philo);
 		philo_sleep(philo);
+		print_log(philo, "is thinking");
 	}
 	return (NULL);
 }
@@ -57,7 +57,7 @@ void	*monitor_routine(void *arg)
 	{
 		if (!death_check(data))
 			return (NULL);
-		usleep(1000);
+		usleep(100);
 	}
 	return (NULL);
 }

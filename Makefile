@@ -1,6 +1,6 @@
 NAME		:= philo
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g
+CFLAGS		:= -Wall -Wextra -Werror -g -pthread
 
 # Directories
 SRC_DIRS	:= src

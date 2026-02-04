@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 02:55:03 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/03 21:09:07 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/04 15:35:22 by rafaoliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_data
 	int				n_t_must_eat;
 	int				stop_flag;
 	long long		start_time;
+	pthread_t		monitor;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	log;
 	pthread_mutex_t	init_time;
@@ -38,6 +39,7 @@ typedef struct s_philo
 {
 	int				philo_id;
 	long long		last_meal;
+	pthread_t		thread_id;
 	pthread_mutex_t	meal;
 	t_data			*data;
 }	t_philo;
