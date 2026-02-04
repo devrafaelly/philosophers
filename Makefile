@@ -18,11 +18,13 @@ RESET		:= \033[0m
 # Files
 SRC		:= 	src/philo.c \
 			src/parse.c \
-			src/init.c \
+			src/data_init.c \
 			src/routine.c \
 			src/actions.c \
+			src/thread_init.c \
 			src/time_control.c \
-			src/utils.c
+			src/utils.c \
+			src/data_cleanup.c
 OBJ		:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
 $(NAME): $(OBJ)
@@ -35,7 +37,7 @@ $(OBJ_DIR)/%.o: %.c
 	@echo "$(BLUE)Compiling $<$(RESET)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# Rules
+# rules
 all: $(NAME)
 
 clean:
