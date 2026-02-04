@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 02:44:50 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/02 21:01:50 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/03 18:01:34 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void	data_cleanup(t_data *data);
+
 int	main(int ac, char **av)
 {
-	t_rules	*rules;
+	t_data	*data;
 	int		*numbers;
-	int		i;
 
 	if (ac < 5 || ac > 6)
-		return (printf("Error: wrong number of arguments\n"), 1);
+	{
+		printf("Error: wrong number of arguments\n");
+		return (1);
+	}
 	numbers = parse_args(ac, av);
 	if (!numbers)
-		return (printf("Error: invalid arguments\n"), 1);
-	rules = init_program(ac, numbers);
-	if (!rules)
+	{
+		printf("Error: invalid arguments\n");
 		return (1);
-	philo_init(rules);
-	// iniciar a rotina
-	i = 0;
-	while (i < rules->number_of_philosophers)
-		pthread_mutex_destroy(&rules->forks[i++]);
-	pthread_mutex_destroy(&rules->log);
+	}
+	data = data_init(ac, numbers);
+	if (!data)
+		return (1);
+	thread_init(data);
+	data_cleanup(data);
 	free(numbers);
-	free(rules->forks);
-	free(rules);
 	return (0);
 }
