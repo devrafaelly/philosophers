@@ -6,13 +6,15 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 04:15:48 by codespace         #+#    #+#             */
-/*   Updated: 2026/02/02 21:09:51 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/03 21:33:26 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 #include <stdio.h>
+
+int	get_stop(t_data *data);
 
 long	ft_atol(const char *nptr)
 {
@@ -48,10 +50,10 @@ void	print_log(t_philo *philo, char *s)
 {
 	long long	time;
 
-	time = timestamp(philo);
-	if (!time)
+	if (get_stop(philo->data))
 		return ;
-	pthread_mutex_lock(&(philo->rules->log));
+	time = timestamp(philo->data);
+	pthread_mutex_lock(&(philo->data->log));
 	printf("%lld %d %s\n", time, philo->philo_id, s);
-	pthread_mutex_unlock(&(philo->rules->log));
+	pthread_mutex_unlock(&(philo->data->log));
 }
