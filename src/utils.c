@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 04:15:48 by codespace         #+#    #+#             */
-/*   Updated: 2026/02/07 14:53:32 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/07 15:50:09 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 #include <unistd.h>
 #include <stdio.h>
 
-long	timestamp(t_data *data);
-int		get_stop(t_data *data);
+long long	timestamp(t_data *data);
+int			get_stop(t_data *data);
 
 void	print_log(t_philo *philo, char *s)
 {
-	long time;
+	long long	time;
 
 	pthread_mutex_lock(&(philo->data->log));
 	time = timestamp(philo->data);
 	if (!get_stop(philo->data))
-		printf("%ld %d %s\n", time, philo->philo_id, s);
+		printf("%lld %d %s\n", time, philo->philo_id, s);
 	pthread_mutex_unlock(&(philo->data->log));
 }
 
@@ -34,7 +34,7 @@ void	ft_usleep(t_data *data, int ms)
 	long long	time;
 
 	time = timestamp(data);
-	while((timestamp(data) - time) < ms)
+	while ((timestamp(data) - time) < ms)
 	{
 		if (get_stop(data))
 			return ;

@@ -19,6 +19,7 @@ RESET		:= \033[0m
 SRC		:= 	src/main.c \
 			src/parse.c \
 			src/data_init.c \
+			src/monitor.c \
 			src/routine.c \
 			src/actions.c \
 			src/thread.c \

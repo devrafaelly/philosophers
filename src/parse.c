@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 20:24:51 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/05 19:48:39 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/07 15:51:40 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-long		ft_atol(const char *nptr);
+long long	ft_atol(const char *nptr);
 int			ft_isdigit(int c);
 static int	validate_input(char *s);
 static void	*input_error_handler(int *input);

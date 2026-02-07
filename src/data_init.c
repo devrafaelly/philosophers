@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 20:14:38 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/07 14:37:46 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/07 16:11:04 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-long		get_current_time(void);
+long long	get_current_time(void);
 static int	set_philo(t_data *data);
 static int	set_forks(t_data *data);
 
-void data_init(t_data *data, int ac, int *input)
+void	data_init(t_data *data, int ac, int *input)
 {
 	data->n_philo = input[0];
 	data->t_die = input[1];
@@ -56,6 +56,10 @@ static int	set_philo(t_data *data)
 	while (i < data->n_philo)
 	{
 		philo[i].philo_id = i + 1;
+		philo[i].left = i;
+		philo[i].right = (i + 1) % data->n_philo;
+		philo[i].times_eaten = 0;
+		philo[i].satisfaction = 0;
 		philo[i].last_meal = 0;
 		philo[i].data = data;
 		pthread_mutex_init(&philo[i].meal, NULL);
@@ -68,7 +72,7 @@ static int	set_philo(t_data *data)
 static int	set_forks(t_data *data)
 {
 	int	i;
-	
+
 	data->forks = malloc(data->n_philo * sizeof(pthread_mutex_t));
 	if (!data->forks)
 	{
