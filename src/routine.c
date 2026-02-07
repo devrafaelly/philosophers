@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 23:59:46 by codespace         #+#    #+#             */
-/*   Updated: 2026/02/07 17:37:11 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/07 17:44:10 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,7 @@ void	*philo_routine(void *arg)
 		usleep(100);
 	while (!get_stop(philo->data))
 	{
-		if (!philo_take_forks(philo))
-			break ;
 		philo_eat(philo);
-		pthread_mutex_unlock(&(philo->data->forks[philo->right]));
-		pthread_mutex_unlock(&(philo->data->forks[philo->left]));
 		philo_sleep(philo);
 		philo_think(philo);
 	}
@@ -80,6 +76,8 @@ static void	philo_eat(t_philo *philo)
 {
 	long long	time;
 
+	if (!philo_take_forks(philo))
+		return ;
 	pthread_mutex_lock(&philo->meal);
 	time = timestamp(philo->data);
 	philo->last_meal = time;
@@ -89,6 +87,8 @@ static void	philo_eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->meal);
 	print_log(philo, "is eating");
 	ft_usleep(philo->data, philo->data->t_eat);
+	pthread_mutex_unlock(&(philo->data->forks[philo->right]));
+	pthread_mutex_unlock(&(philo->data->forks[philo->left]));
 }
 
 static void	philo_sleep(t_philo *philo)
