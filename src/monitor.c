@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:56:00 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/07 16:27:03 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/07 16:51:08 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static int	satisfaction_check(t_data *data)
 
 	philo = data->philo;
 	i = 0;
-	
 	while (i < data->n_philo)
 	{
 		pthread_mutex_lock(&data->philo[i].meal);

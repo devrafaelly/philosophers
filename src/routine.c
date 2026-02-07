@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 23:59:46 by codespace         #+#    #+#             */
-/*   Updated: 2026/02/07 15:59:37 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/07 16:48:54 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,3 @@ void	*philo_routine(void *arg)
 	}
 	return (NULL);
 }
-
