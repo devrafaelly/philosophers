@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 02:55:03 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/07 16:10:06 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/07 16:45:51 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # include <pthread.h>
 # include <sys/time.h>
+
+# define C_RESET   "\033[0m"
+# define C_EAT     "\033[92m"
+# define C_SLEEP   "\033[96m"
+# define C_THINK   "\033[94m"
+# define C_FORK    "\033[93m"
+# define C_DIE     "\033[91m"
 
 typedef struct s_philo	t_philo;
 
