@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:56:00 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/07 16:51:08 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/07 16:56:24 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ void	*monitor_routine(void *arg)
 	{
 		if (death_check(data))
 			return (NULL);
-		if (satisfaction_check(data))
-			return (NULL);
+		if (data->n_t_must_eat > 0)
+		{
+			if (satisfaction_check(data))
+				return (NULL);
+		}
 		usleep(100);
 	}
 	return (NULL);
@@ -75,7 +78,7 @@ static int	satisfaction_check(t_data *data)
 		pthread_mutex_lock(&data->philo[i].meal);
 		if (!philo[i].satisfaction)
 		{
-			pthread_mutex_unlock(&data->philo->meal);
+			pthread_mutex_unlock(&data->philo[i].meal);
 			return (0);
 		}
 		pthread_mutex_unlock(&data->philo[i].meal);
