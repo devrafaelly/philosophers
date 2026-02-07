@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 00:42:05 by codespace         #+#    #+#             */
-/*   Updated: 2026/02/04 16:21:09 by rafaoliv         ###   ########.fr       */
+/*   Updated: 2026/02/07 14:51:55 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
+long	timestamp(t_data *data);
 int		get_stop(t_data *data);
 void	ft_usleep(t_data *data, int ms);
 void	print_log(t_philo *philo, char *s);
@@ -44,7 +45,7 @@ void	philo_take_forks(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	long long	time;
+	long	time;
 
 	time = timestamp(philo->data);
 	pthread_mutex_lock(&philo->meal);

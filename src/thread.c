@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread_init.c                                      :+:      :+:    :+:   */
+/*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 17:19:00 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/04 15:38:47 by rafaoliv         ###   ########.fr       */
+/*   Updated: 2026/02/07 14:40:31 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,46 +15,36 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-long long	get_current_time(void);
-static int	create_threads(t_data *data);
-static int	join_threads(t_data *data);
+long		get_current_time(void);
+void		*philo_routine(void *arg);
+void		*monitor_routine(void *arg);
 
-void	thread_init(t_data *data)
+void	create_threads(t_data *data)
 {
-	if (create_threads(data) != 0)
-		return ;
-	if (join_threads(data) != 0)
-		return ;
-}
+	t_philo	*philo;
+	int		i;
 
-static int	create_threads(t_data *data)
-{
-	int	i;
-
-	if (pthread_create(&data->monitor, NULL, monitor_routine, data) != 0)
-		return (printf("Error: thread creation failed\n"), 1);
-	pthread_mutex_lock(&data->init_time);
+	philo = data->philo;
 	data->start_time = get_current_time();
-	pthread_mutex_unlock(&data->init_time);
 	i = 0;
 	while (i < data->n_philo)
 	{
-		data->philo[i].philo_id = i + 1;
-		data->philo[i].last_meal = 0;
-		data->philo[i].data = data;
-		pthread_mutex_init(&data->philo[i].meal, NULL);
-		if (pthread_create(&data->philo[i].thread_id, NULL, philo_routine,
-				&data->philo[i]) != 0)
+		if (pthread_create(&philo[i].thread_id, NULL, philo_routine,
+				&philo[i]) != 0)
 		{
 			printf("Error: thread creation failed\n");
-			return (1);
+			return ;
 		}
 		i++;
 	}
-	return (0);
+	if (pthread_create(&data->monitor, NULL, monitor_routine, data) != 0)
+	{
+		printf("Error: thread creation failed\n");
+		return ;
+	}
 }
 
-static int	join_threads(t_data *data)
+void	join_threads(t_data *data)
 {
 	int	i;
 
@@ -64,14 +54,13 @@ static int	join_threads(t_data *data)
 		if (pthread_join(data->philo[i].thread_id, NULL) != 0)
 		{
 			printf("Error: thread join failed\n");
-			return (1);
+			return ;
 		}
 		i++;
 	}
 	if (pthread_join(data->monitor, NULL) != 0)
 	{
 		printf("Error: thread join failed\n");
-		return (1);
+		return ;
 	}
-	return (0);
 }

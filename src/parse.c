@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 20:24:51 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/02 21:09:47 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/05 19:48:39 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 long		ft_atol(const char *nptr);
 int			ft_isdigit(int c);
 static int	validate_input(char *s);
-static void	*input_error_handler(int *numbers);
+static void	*input_error_handler(int *input);
 
 int	*parse_args(int ac, char **av)
 {
-	int		*numbers;
+	int		*input;
 	long	n;
 	int		i;
 
-	numbers = malloc((ac - 1) * sizeof(int));
-	if (!numbers)
+	input = malloc((ac - 1) * sizeof(int));
+	if (!input)
 	{
 		printf("Error: malloc failed\n");
 		return (NULL);
@@ -36,16 +36,16 @@ int	*parse_args(int ac, char **av)
 	while (av[i + 1])
 	{
 		if (!validate_input(av[i + 1]))
-			return (input_error_handler(numbers));
+			return (input_error_handler(input));
 		n = ft_atol(av[i + 1]);
 		if (n > 2147483647)
-			return (input_error_handler(numbers));
+			return (input_error_handler(input));
 		if (n <= 0)
-			return (input_error_handler(numbers));
-		numbers[i] = n;
+			return (input_error_handler(input));
+		input[i] = n;
 		i++;
 	}
-	return (numbers);
+	return (input);
 }
 
 static int	validate_input(char *s)
@@ -63,9 +63,9 @@ static int	validate_input(char *s)
 	return (1);
 }
 
-static void	*input_error_handler(int *numbers)
+static void	*input_error_handler(int *input)
 {
 	printf("Error: invalid input\n");
-	free(numbers);
+	free(input);
 	return (NULL);
 }

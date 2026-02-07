@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 02:44:50 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/04 16:22:21 by rafaoliv         ###   ########.fr       */
+/*   Updated: 2026/02/07 14:52:01 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,23 @@ void	data_cleanup(t_data *data);
 
 int	main(int ac, char **av)
 {
-	t_data	*data;
-	int		*numbers;
+	t_data	data;
+	int		*input;
 
 	if (ac < 5 || ac > 6)
 	{
 		printf("Error: wrong number of arguments\n");
 		return (1);
 	}
-	numbers = parse_args(ac, av);
-	if (!numbers)
-	{
-		printf("Error: invalid arguments\n");
+	input = parse_args(ac, av);
+	if (!input)
 		return (1);
-	}
-	data = data_init(ac, numbers);
-	if (!data)
+	data_init(&data, ac, input);
+	if (!data.philo)
 		return (1);
-	thread_init(data);
-	data_cleanup(data);
-	free(numbers);
+	create_threads(&data);
+	join_threads(&data);
+	data_cleanup(&data);
+	free(input);
 	return (0);
 }

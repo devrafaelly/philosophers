@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 23:59:46 by codespace         #+#    #+#             */
-/*   Updated: 2026/02/04 16:04:10 by rafaoliv         ###   ########.fr       */
+/*   Updated: 2026/02/07 14:52:03 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void		philo_drop_forks(t_philo *philo);
 void		philo_sleep(t_philo *philo);
 void		ft_usleep(t_data *data, int ms);
 void		print_log(t_philo *philo, char *s);
+long		timestamp(t_data *data);
 int			get_stop(t_data *data);
 static void	set_stop(t_data *data);
 static int	death_check(t_data *data);
@@ -64,9 +65,9 @@ void	*monitor_routine(void *arg)
 
 static int	death_check(t_data *data)
 {
-	long long	time;
-	long long	last;
-	int			i;
+	long	time;
+	long	last;
+	int		i;
 	
 	i = 0;
 	while (i < data->n_philo)

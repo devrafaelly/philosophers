@@ -16,12 +16,12 @@ BLUE		:= \033[0;34m
 RESET		:= \033[0m
 
 # Files
-SRC		:= 	src/philo.c \
+SRC		:= 	src/main.c \
 			src/parse.c \
 			src/data_init.c \
 			src/routine.c \
 			src/actions.c \
-			src/thread_init.c \
+			src/thread.c \
 			src/time_control.c \
 			src/utils.c \
 			src/data_cleanup.c

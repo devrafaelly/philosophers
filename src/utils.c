@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 04:15:48 by codespace         #+#    #+#             */
-/*   Updated: 2026/02/04 16:15:20 by rafaoliv         ###   ########.fr       */
+/*   Updated: 2026/02/07 14:53:32 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,17 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int	get_stop(t_data *data);
+long	timestamp(t_data *data);
+int		get_stop(t_data *data);
 
 void	print_log(t_philo *philo, char *s)
 {
-	long long	time;
+	long time;
 
 	pthread_mutex_lock(&(philo->data->log));
 	time = timestamp(philo->data);
 	if (!get_stop(philo->data))
-		printf("%lld %d %s\n", time, philo->philo_id, s);
+		printf("%ld %d %s\n", time, philo->philo_id, s);
 	pthread_mutex_unlock(&(philo->data->log));
 }
 
@@ -37,7 +38,7 @@ void	ft_usleep(t_data *data, int ms)
 	{
 		if (get_stop(data))
 			return ;
-		usleep(100);
+		usleep(50);
 	}
 }
 
