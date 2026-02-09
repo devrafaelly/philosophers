@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 23:59:46 by codespace         #+#    #+#             */
-/*   Updated: 2026/02/07 17:44:10 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/09 17:24:35 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	philo_think(t_philo *philo);
 void	*philo_routine(void *arg)
 {
 	t_philo		*philo;
+	int			full;
 
 	philo = (t_philo *)arg;
 	if (philo->data->n_philo == 1)
@@ -35,9 +36,14 @@ void	*philo_routine(void *arg)
 		return (NULL);
 	}
 	if (philo->philo_id % 2 != 0)
-		usleep(100);
+		usleep(50);
 	while (!get_stop(philo->data))
 	{
+		pthread_mutex_lock(&philo->meal);
+		full = (philo->times_eaten == philo->data->n_t_must_eat);
+		pthread_mutex_unlock(&philo->meal);
+		if (full)
+			break ;
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);
@@ -50,22 +56,18 @@ static int	philo_take_forks(t_philo *philo)
 	if (philo->philo_id % 2 == 0)
 	{
 		pthread_mutex_lock(&(philo->data->forks[philo->right]));
-		if (get_stop(philo->data))
-		{
-			pthread_mutex_unlock(&philo->data->forks[philo->right]);
-			return (0);
-		}
 		pthread_mutex_lock(&(philo->data->forks[philo->left]));
 	}
 	else
 	{
 		pthread_mutex_lock(&(philo->data->forks[philo->left]));
-		if (get_stop(philo->data))
-		{
-			pthread_mutex_unlock(&philo->data->forks[philo->left]);
-			return (0);
-		}
 		pthread_mutex_lock(&(philo->data->forks[philo->right]));
+	}
+	if (get_stop(philo->data))
+	{
+		pthread_mutex_unlock(&philo->data->forks[philo->right]);
+		pthread_mutex_unlock(&philo->data->forks[philo->left]);
+		return (0);
 	}
 	print_log(philo, "has taken a fork");
 	print_log(philo, "has taken a fork");
@@ -82,8 +84,12 @@ static void	philo_eat(t_philo *philo)
 	time = timestamp(philo->data);
 	philo->last_meal = time;
 	philo->times_eaten++;
-	if (philo->times_eaten >= philo->data->n_t_must_eat)
-		philo->satisfaction = 1;
+	if (philo->times_eaten == philo->data->n_t_must_eat)
+	{
+		pthread_mutex_lock(&philo->data->full);
+		philo->data->is_full++;
+		pthread_mutex_unlock(&philo->data->full);
+	}
 	pthread_mutex_unlock(&philo->meal);
 	print_log(philo, "is eating");
 	ft_usleep(philo->data, philo->data->t_eat);

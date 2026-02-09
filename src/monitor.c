@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:56:00 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/07 18:05:36 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/09 17:12:00 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 long long	timestamp(t_data *data);
 void		print_log(t_philo *philo, char *s);
 static int	death_check(t_data *data);
-static int	satisfaction_check(t_data *data);
+static int	is_full_check(t_data *data);
 int			get_stop(t_data *data);
 static void	set_stop(t_data *data);
 
@@ -32,10 +32,10 @@ void	*monitor_routine(void *arg)
 			return (NULL);
 		if (data->n_t_must_eat > 0)
 		{
-			if (satisfaction_check(data))
+			if (is_full_check(data))
 				return (NULL);
 		}
-		usleep(100);
+		usleep(50);
 	}
 	return (NULL);
 }
@@ -66,26 +66,17 @@ static int	death_check(t_data *data)
 	return (0);
 }
 
-static int	satisfaction_check(t_data *data)
+static int	is_full_check(t_data *data)
 {
-	t_philo		*philo;
-	int			i;
-
-	philo = data->philo;
-	i = 0;
-	while (i < data->n_philo)
+	pthread_mutex_lock(&data->full);
+	if (data->is_full >= data->n_philo)
 	{
-		pthread_mutex_lock(&data->philo[i].meal);
-		if (!philo[i].satisfaction)
-		{
-			pthread_mutex_unlock(&data->philo[i].meal);
-			return (0);
-		}
-		pthread_mutex_unlock(&data->philo[i].meal);
-		i++;
+		set_stop(data);
+		pthread_mutex_unlock(&data->full);
+		return (1);
 	}
-	set_stop(data);
-	return (1);
+	pthread_mutex_unlock(&data->full);
+	return (0);
 }
 
 int	get_stop(t_data *data)

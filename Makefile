@@ -21,7 +21,6 @@ SRC		:= 	src/main.c \
 			src/data_init.c \
 			src/monitor.c \
 			src/routine.c \
-			src/actions.c \
 			src/thread.c \
 			src/time_control.c \
 			src/utils.c \

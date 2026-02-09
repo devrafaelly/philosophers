@@ -6,7 +6,7 @@
 /*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 20:14:38 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/07 16:11:04 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/09 17:06:02 by devrafaelly      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ void	data_init(t_data *data, int ac, int *input)
 	data->t_die = input[1];
 	data->t_eat = input[2];
 	data->t_sleep = input[3];
-	data->n_t_must_eat = 0;
+	data->n_t_must_eat = -1;
 	if (ac == 6)
 		data->n_t_must_eat = input[4];
+	data->is_full = 0;
 	data->stop_flag = 0;
 	if (!set_philo(data))
 		return ;
@@ -37,7 +38,7 @@ void	data_init(t_data *data, int ac, int *input)
 		return ;
 	}
 	pthread_mutex_init(&data->log, NULL);
-	pthread_mutex_init(&data->init_time, NULL);
+	pthread_mutex_init(&data->full, NULL);
 	pthread_mutex_init(&data->death, NULL);
 }
 
@@ -59,7 +60,6 @@ static int	set_philo(t_data *data)
 		philo[i].left = i;
 		philo[i].right = (i + 1) % data->n_philo;
 		philo[i].times_eaten = 0;
-		philo[i].satisfaction = 0;
 		philo[i].last_meal = 0;
 		philo[i].data = data;
 		pthread_mutex_init(&philo[i].meal, NULL);
