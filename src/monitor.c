@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:56:00 by devrafaelly       #+#    #+#             */
-/*   Updated: 2026/02/09 17:12:00 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/10 14:25:09 by rafaoliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	death_check(t_data *data)
 static int	is_full_check(t_data *data)
 {
 	pthread_mutex_lock(&data->full);
-	if (data->is_full >= data->n_philo)
+	if (data->is_full == data->n_philo)
 	{
 		set_stop(data);
 		pthread_mutex_unlock(&data->full);

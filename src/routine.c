@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: devrafaelly <devrafaelly@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 23:59:46 by codespace         #+#    #+#             */
-/*   Updated: 2026/02/09 17:24:35 by devrafaelly      ###   ########.fr       */
+/*   Updated: 2026/02/10 15:04:10 by rafaoliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	philo_think(t_philo *philo);
 void	*philo_routine(void *arg)
 {
 	t_philo		*philo;
-	int			full;
 
 	philo = (t_philo *)arg;
 	if (philo->data->n_philo == 1)
@@ -39,11 +38,6 @@ void	*philo_routine(void *arg)
 		usleep(50);
 	while (!get_stop(philo->data))
 	{
-		pthread_mutex_lock(&philo->meal);
-		full = (philo->times_eaten == philo->data->n_t_must_eat);
-		pthread_mutex_unlock(&philo->meal);
-		if (full)
-			break ;
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);
@@ -110,4 +104,6 @@ static void	philo_think(t_philo *philo)
 	if (get_stop(philo->data))
 		return ;
 	print_log(philo, "is thinking");
+	if (philo->data->n_philo % 2 != 0)
+		usleep(1000);
 }
